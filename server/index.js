@@ -14,7 +14,9 @@ import userRoutes from './routes/users.js';
 import postRoutes from './routes/posts.js';
 import { verifyToken } from './middlewares/auth.js';
 import {createPost} from './controllers/posts.js'
-
+import User from './models/User.js';
+import Post from './models/posts.js';
+import { users,posts } from './data/index.js';
 
 // configuration
 const __filename = fileURLToPath(import.meta.url);
@@ -50,6 +52,11 @@ mongoose.connect(process.env.MONGO_URL,{
     useUnifiedTopology: true,
 }).then(()=>{
     app.listen(PORT,()=>console.log(`Server Port: ${PORT}`));
+    
+    // adding dummy data once
+    // User.insertMany(users);
+    // Post.insertMany(posts);
+
 }).catch((error)=>console.log(`${error} did not connect`));
 
 //routes with files
