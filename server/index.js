@@ -8,6 +8,9 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import path from 'path';
 import {fileURLToPath} from 'url';
+import { register } from './controllers/auth.js';
+import authRoutes from './routes/auth.js';
+
 
 
 // configuration
@@ -45,6 +48,12 @@ mongoose.connect(process.env.MONGO_URL,{
 }).then(()=>{
     app.listen(PORT,()=>console.log(`Server Port: ${PORT}`));
 }).catch((error)=>console.log(`${error} did not connect`));
+
+//routes with files
+app.post('/auth/register',upload.single("picture"),register)//upon registering will save picture into /public/assets
+
+//routes
+app.use('/auth',authRoutes);
 
 
 
