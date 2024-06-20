@@ -13,7 +13,7 @@ function App() {
 
   const mode = useSelector((state)=>state.mode);//state ke index.js se ayega
   const theme = useMemo(()=>createTheme(themeSettings(mode)),[mode]);
-
+  const isAuth = Boolean(useSelector((state)=>state.token)); //if token aya toh true(logged in hai)
 
   return (
     <div className="app">
@@ -22,8 +22,8 @@ function App() {
         <CssBaseline/>
         <Routes>
           <Route path='/' element={<LoginPage/>}/>
-          <Route path='/home' element={<HomePage/>}/>
-          <Route path='/profile/:userId' element={<ProfilePage/>}/>
+          <Route path='/home' element={isAuth ? <HomePage/> : <Navigate to='/'/>}/>  {/* if logged in(token aya) then */}
+          <Route path='/profile/:userId' element={isAuth ? <ProfilePage/> : <Navigate to="/"/>}/>
         </Routes>
       </ThemeProvider>
       </BrowserRouter>
